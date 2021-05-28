@@ -5,23 +5,25 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   //[year,month,day,hours,minutes,seconds]
-  const birthData = moment([2000, 11, 21, 9, 15, 0]);
+  const birthData = moment([2021, 4, 6, 8, 4, 21]);
 
-  const [years, setYears] = useState<any>();
-  const [months, setMonths] = useState<any>();
-  const [days, setDays] = useState<any>();
-  const [hours, setHours] = useState<any>();
-  const [minutes, setMinutes] = useState<any>();
+  // const [years, setYears] = useState<any>();
+  // const [months, setMonths] = useState<any>();
+  // const [days, setDays] = useState<any>();
+  // const [hours, setHours] = useState<any>();
+  // const [minutes, setMinutes] = useState<any>();
   const [seconds, setSeconds] = useState<any>();
 
   useEffect(() => {
     setTimeout(() => {
-      setYears(moment().diff(birthData, "years").toString());
-      setMonths(Math.floor(moment().diff(birthData, "months") % 12));
-      setDays(Math.floor(moment().diff(birthData, "days") % 30));
-      setHours(Math.floor(moment().diff(birthData, "hours") % 24));
-      setMinutes(Math.floor(moment().diff(birthData, "minutes") % 60));
-      setSeconds(Math.floor(moment().diff(birthData, "seconds") % 60));
+      // setYears(moment().diff(birthData, "years"));
+      // setMonths(Math.floor(moment().diff(birthData, "months") % 12));
+      // setDays(Math.floor(moment().diff(birthData, "days") % 30));
+      // setHours(Math.floor(moment().diff(birthData, "hours") % 24));
+      // setMinutes(Math.floor(moment().diff(birthData, "minutes") % 60));
+
+      console.log(birthData);
+      setSeconds(moment().diff(birthData, "seconds"));
     }, 1000);
   }, [seconds]);
 
@@ -39,7 +41,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        {years !== "0" && years > 0 && (
+        {/* {years !== "0" && years > 0 && (
           <>
             <span>{years}</span>
             <span>:</span>
@@ -72,7 +74,7 @@ export default function Home() {
 
             <span>:</span>
           </>
-        )}
+        )} */}
         <span>{seconds}</span>
       </main>
 
