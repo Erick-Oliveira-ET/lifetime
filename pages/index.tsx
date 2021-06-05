@@ -1,29 +1,67 @@
-import moment from "moment";
+import moment, { Moment } from "moment";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  //[year,month,day,hours,minutes,seconds]
-  const birthData = moment([2021, 4, 6, 8, 4, 21]);
+  // year, month, day, hours, minutes, seconds;
+  const birthDateArray = [2021, 4, 6, 8, 4, 21];
+  const birthData = moment(birthDateArray);
 
-  // const [years, setYears] = useState<any>();
-  // const [months, setMonths] = useState<any>();
-  // const [days, setDays] = useState<any>();
-  // const [hours, setHours] = useState<any>();
-  // const [minutes, setMinutes] = useState<any>();
+  const [years, setYears] = useState<any>();
+  const [months, setMonths] = useState<any>();
+  const [days, setDays] = useState<any>();
+  const [hours, setHours] = useState<any>();
+  const [minutes, setMinutes] = useState<any>();
   const [seconds, setSeconds] = useState<any>();
 
   useEffect(() => {
     setTimeout(() => {
-      // setYears(moment().diff(birthData, "years"));
-      // setMonths(Math.floor(moment().diff(birthData, "months") % 12));
-      // setDays(Math.floor(moment().diff(birthData, "days") % 30));
-      // setHours(Math.floor(moment().diff(birthData, "hours") % 24));
-      // setMinutes(Math.floor(moment().diff(birthData, "minutes") % 60));
+      setYears(Math.floor(moment().diff(birthData, "years")));
 
-      console.log(birthData);
-      setSeconds(moment().diff(birthData, "seconds"));
+      setMonths(
+        String(Math.floor(moment().diff(birthData, "months") % 12))
+          .padStart(2, "0")
+          .split("")
+      );
+
+      let tempDate: number | Moment = 0;
+
+      // birthDateArray[2]: day
+      if (moment().date() < birthDateArray[2]) {
+        tempDate = moment([
+          moment().year(),
+          moment().month(),
+          6,
+          8,
+          4,
+          21,
+        ]).subtract(1, "month");
+
+        tempDate = Math.floor(moment().diff(tempDate, "days"));
+      } else {
+        tempDate = moment([moment().year(), moment().month(), 6, 8, 4, 21]);
+
+        tempDate = Math.floor(moment().diff(tempDate, "days"));
+      }
+
+      setDays(String(tempDate).padStart(2, "0").split(""));
+      setHours(
+        String(Math.floor(moment().diff(birthData, "hours") % 24))
+          .padStart(2, "0")
+          .split("")
+      );
+      setMinutes(
+        String(Math.floor(moment().diff(birthData, "minutes") % 60))
+          .padStart(2, "0")
+          .split("")
+      );
+
+      setSeconds(
+        String(Math.floor(moment().diff(birthData, "seconds") % 60))
+          .padStart(2, "0")
+          .split("")
+      );
     }, 1000);
   }, [seconds]);
 
@@ -41,41 +79,9 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        {/* {years !== "0" && years > 0 && (
-          <>
-            <span>{years}</span>
-            <span>:</span>
-          </>
-        )}
-        {months !== "0" && months > 0 && (
-          <>
-            <span>{months}</span>
-
-            <span>:</span>
-          </>
-        )}
-        {days !== "0" && days > 0 && (
-          <>
-            <span>{days}</span>
-
-            <span>:</span>
-          </>
-        )}
-        {hours !== "0" && hours > 0 && (
-          <>
-            <span>{hours}</span>
-
-            <span>:</span>
-          </>
-        )}
-        {minutes !== "0" && minutes > 0 && (
-          <>
-            <span>{minutes}</span>
-
-            <span>:</span>
-          </>
-        )} */}
-        <span>{seconds}</span>
+        <span>
+          {years}:{months}:{days}:{hours}:{minutes}:{seconds}
+        </span>
       </main>
 
       <footer className={styles.footer}>
