@@ -13,7 +13,6 @@ export default function Birthday() {
 
   const birthData = moment(birthDateArray);
 
-  const [years, setYears] = useState<any>();
   const [months, setMonths] = useState<any>();
   const [days, setDays] = useState<any>();
   const [hours, setHours] = useState<any>();
@@ -32,14 +31,25 @@ export default function Birthday() {
 
       // birthDateArray[2]: day
       if (moment().date() < birthDateArray[2]) {
-        tempDate = moment([moment().year(), moment().month(), 6, 8, 4, 21]);
+        tempDate = moment([
+          moment().year(),
+          moment().month(),
+          birthDateArray[2],
+          birthDateArray[3],
+          birthDateArray[4],
+          birthDateArray[5],
+        ]);
 
         tempDate = Math.abs(Math.floor(moment().diff(tempDate, "days")));
       } else {
-        tempDate = moment([moment().year(), moment().month(), 6, 8, 4, 21]).add(
-          1,
-          "month"
-        );
+        tempDate = moment([
+          moment().year(),
+          moment().month(),
+          birthDateArray[2],
+          birthDateArray[3],
+          birthDateArray[4],
+          birthDateArray[5],
+        ]).add(1, "month");
 
         tempDate = Math.abs(Math.floor(moment().diff(tempDate, "days")));
       }

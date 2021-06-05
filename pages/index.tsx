@@ -32,15 +32,22 @@ export default function Home() {
         tempDate = moment([
           moment().year(),
           moment().month(),
-          6,
-          8,
-          4,
-          21,
+          birthDateArray[2],
+          birthDateArray[3],
+          birthDateArray[4],
+          birthDateArray[5],
         ]).subtract(1, "month");
 
         tempDate = Math.floor(moment().diff(tempDate, "days"));
       } else {
-        tempDate = moment([moment().year(), moment().month(), 6, 8, 4, 21]);
+        tempDate = moment([
+          moment().year(),
+          moment().month(),
+          birthDateArray[2],
+          birthDateArray[3],
+          birthDateArray[4],
+          birthDateArray[5],
+        ]);
 
         tempDate = Math.floor(moment().diff(tempDate, "days"));
       }
