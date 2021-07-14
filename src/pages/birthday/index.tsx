@@ -1,11 +1,10 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import styles from "../styles/Home.module.css";
-import { lifeCounter } from "./utils";
+import styles from "../../styles/Home.module.css";
+import { birthdayCountdown } from "@/utils/birthday";
 
 interface InitialVariablesProps {
   initialVariables: {
-    years: string;
     months: string;
     days: string;
     hours: string;
@@ -14,8 +13,7 @@ interface InitialVariablesProps {
   };
 }
 
-export default function Home({ initialVariables }: InitialVariablesProps) {
-  const [years, setYears] = useState<any>(initialVariables.years);
+export default function Birthday({ initialVariables }: InitialVariablesProps) {
   const [months, setMonths] = useState<any>(initialVariables.months);
   const [days, setDays] = useState<any>(initialVariables.days);
   const [hours, setHours] = useState<any>(initialVariables.hours);
@@ -24,12 +22,11 @@ export default function Home({ initialVariables }: InitialVariablesProps) {
 
   useEffect(() => {
     setTimeout(() => {
-      setYears(lifeCounter.years());
-      setMonths(lifeCounter.months());
-      setDays(lifeCounter.days());
-      setHours(lifeCounter.hours());
-      setMinutes(lifeCounter.minutes());
-      setSeconds(lifeCounter.seconds());
+      setMonths(birthdayCountdown.months());
+      setDays(birthdayCountdown.days());
+      setHours(birthdayCountdown.hours());
+      setMinutes(birthdayCountdown.minutes());
+      setSeconds(birthdayCountdown.seconds());
     }, 1000);
   }, [seconds]);
 
@@ -48,7 +45,7 @@ export default function Home({ initialVariables }: InitialVariablesProps) {
 
       <main className={styles.main}>
         <span>
-          {years}:{months}:{days}:{hours}:{minutes}:{seconds}
+          {months}:{days}:{hours}:{minutes}:{seconds}
         </span>
       </main>
 
@@ -64,16 +61,16 @@ export default function Home({ initialVariables }: InitialVariablesProps) {
     </div>
   );
 }
-export function getServerSideProps() {
+
+export function getStaticProps() {
   return {
     props: {
       initialVariables: {
-        years: lifeCounter.years(),
-        months: lifeCounter.months(),
-        days: lifeCounter.days(),
-        hours: lifeCounter.hours(),
-        minutes: lifeCounter.minutes(),
-        seconds: lifeCounter.seconds(),
+        months: birthdayCountdown.months(),
+        days: birthdayCountdown.days(),
+        hours: birthdayCountdown.hours(),
+        minutes: birthdayCountdown.minutes(),
+        seconds: birthdayCountdown.seconds(),
       },
     },
   };
