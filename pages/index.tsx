@@ -1,74 +1,35 @@
-import moment, { Moment } from "moment";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
+import { lifeCounter } from "./utils";
 
-export default function Home() {
-  // year, month, day, hours, minutes, seconds;
-  const birthDateArray = [2021, 4, 6, 8, 4, 21];
-  const birthData = moment(birthDateArray);
+interface InitialVariablesProps {
+  initialVariables: {
+    years: string;
+    months: string;
+    days: string;
+    hours: string;
+    minutes: string;
+    seconds: string;
+  };
+}
 
-  const [years, setYears] = useState<any>();
-  const [months, setMonths] = useState<any>();
-  const [days, setDays] = useState<any>();
-  const [hours, setHours] = useState<any>();
-  const [minutes, setMinutes] = useState<any>();
-  const [seconds, setSeconds] = useState<any>();
+export default function Home({ initialVariables }: InitialVariablesProps) {
+  const [years, setYears] = useState<any>(initialVariables.years);
+  const [months, setMonths] = useState<any>(initialVariables.months);
+  const [days, setDays] = useState<any>(initialVariables.days);
+  const [hours, setHours] = useState<any>(initialVariables.hours);
+  const [minutes, setMinutes] = useState<any>(initialVariables.minutes);
+  const [seconds, setSeconds] = useState<any>(initialVariables.seconds);
 
   useEffect(() => {
     setTimeout(() => {
-      setYears(Math.floor(moment().diff(birthData, "years")));
-
-      setMonths(
-        String(Math.floor(moment().diff(birthData, "months") % 12))
-          .padStart(2, "0")
-          .split("")
-      );
-
-      let tempDate: number | Moment = 0;
-
-      // birthDateArray[2]: day
-      if (moment().date() < birthDateArray[2]) {
-        tempDate = moment([
-          moment().year(),
-          moment().month(),
-          birthDateArray[2],
-          birthDateArray[3],
-          birthDateArray[4],
-          birthDateArray[5],
-        ]).subtract(1, "month");
-
-        tempDate = Math.floor(moment().diff(tempDate, "days"));
-      } else {
-        tempDate = moment([
-          moment().year(),
-          moment().month(),
-          birthDateArray[2],
-          birthDateArray[3],
-          birthDateArray[4],
-          birthDateArray[5],
-        ]);
-
-        tempDate = Math.floor(moment().diff(tempDate, "days"));
-      }
-
-      setDays(String(tempDate).padStart(2, "0").split(""));
-      setHours(
-        String(Math.floor(moment().diff(birthData, "hours") % 24))
-          .padStart(2, "0")
-          .split("")
-      );
-      setMinutes(
-        String(Math.floor(moment().diff(birthData, "minutes") % 60))
-          .padStart(2, "0")
-          .split("")
-      );
-
-      setSeconds(
-        String(Math.floor(moment().diff(birthData, "seconds") % 60))
-          .padStart(2, "0")
-          .split("")
-      );
+      setYears(lifeCounter.years());
+      setMonths(lifeCounter.months());
+      setDays(lifeCounter.days());
+      setHours(lifeCounter.hours());
+      setMinutes(lifeCounter.minutes());
+      setSeconds(lifeCounter.seconds());
     }, 1000);
   }, [seconds]);
 
@@ -102,4 +63,18 @@ export default function Home() {
       </footer>
     </div>
   );
+}
+export function getServerSideProps() {
+  return {
+    props: {
+      initialVariables: {
+        years: lifeCounter.years(),
+        months: lifeCounter.months(),
+        days: lifeCounter.days(),
+        hours: lifeCounter.hours(),
+        minutes: lifeCounter.minutes(),
+        seconds: lifeCounter.seconds(),
+      },
+    },
+  };
 }
