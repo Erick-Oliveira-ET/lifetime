@@ -18,6 +18,7 @@ This idea came to me because he has just been born in the present time (06/2021)
 - [Next.js](https://nextjs.org/) - React framework
 - [React](https://reactjs.org/) - JS library
 - [Moment](https://momentjs.com/docs/) - JS Library
+- [Static Generation](https://nextjs.org/docs/basic-features/pages#static-generation-without-data)
 - Text shadow
 - Semantic HTML5 markup
 - Flexbox
